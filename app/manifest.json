@@ -33,9 +33,13 @@
         "scripts/jquery-3.2.1.min.js",
         "scripts/contentscript.js"
       ],
+      "css": ["styles/content.css"],
       "run_at": "document_end",
       "all_frames": false
     }
+  ],
+  "web_accessible_resources": [
+    "fonts/*.woff", "fonts/*.ttf", "*.html"
   ],
   "browser_action": {
     "default_icon": {

@@ -1,67 +1,8 @@
-/* CONSTANTS */
-$color-blue: #399fd3;
-$color-red: #cf1b41;
-$color-gray: #6D6E71;
-$color-dark-blue: #004b6a;
-$color-medium-blue: #4298bb;
-$color-light-blue: #7ab5d6;
-$color-dark-gray: #444444;
-$color-medium-gray: #999595;
-$color-light-gray: #e5e5e5;
-$color-medium-red: #aa1c3a;
-$color-orange: #e87d2b;
-$color-purple: #69579C;
+@import "globals";
 
-$white: #fff;
-
-/* GLOBAL STYLES */
-html { font-size: 62.5%; }
 
 body {
   padding: .5rem 2rem;
-}
-
-//Button reset
-.btn {
-  border: none;
-  font-family: inherit;
-  font-size: 1.4rem;
-  color: inherit;
-  background: none;
-  cursor: pointer;
-  padding: 1.5rem 4.0rem;
-  width: 15rem;
-  display: inline-block;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 700;
-  outline: none;
-  position: relative;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
-}
-
-.btn:after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
-}
-
-.btn-1 {
-  border: 3px solid #fff;
-  color: $color-light-gray;
-  background: $color-blue;
-}
-
-/* Button 1a */
-.btn-1a:hover,
-.btn-1a:active {
-  color: $color-blue;
-  background: $color-light-gray;
 }
 
 

@@ -1,0 +1,46 @@
+@import "globals";
+
+
+.suggestion {
+  display: inline-block;
+  padding: .5rem 1.5rem;
+  border: 1px solid $color-dark-gray;
+  margin-left: 1.5rem;
+  border-radius: 1rem;
+
+  .fill-in-btn {
+    width: 8rem;
+    font-size: 1rem;
+    padding: 1rem;
+    display: block;
+    height: 4rem;
+  }
+
+  .suggestion-select {
+    height: 3rem;
+    width: 12rem;
+    font-size: 1.8rem;
+    background-color: white;
+    color: #666;
+    margin-top: 1.5rem;
+  }
+}
+
+.edit-suggestion {
+  font-size: 2.2rem;
+  color: $color-dark-gray;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+}
+.icon-cross {
+  position: absolute;
+  top: 0;
+  right: -.8rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
