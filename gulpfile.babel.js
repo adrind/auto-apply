@@ -101,6 +101,23 @@ gulp.task('babel', () => {
       .pipe(gulp.dest('app/scripts'));
 });
 
+gulp.task('scripts', function() {
+    // Single entry point to browserify 
+    gulp.src('app/scripts/contentscript.js')
+        .pipe($.browserify({
+          insertGlobals : true,
+          debug : !gulp.env.production
+        }))
+        .pipe(gulp.dest('app/scripts/built'))
+
+    gulp.src('app/scripts/background.js')
+      .pipe($.browserify({
+        insertGlobals : true,
+        debug : !gulp.env.production
+      }))
+      .pipe(gulp.dest('app/scripts/built'))
+});
+
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 gulp.task('watch', ['lint', 'babel'], () => {
@@ -114,7 +131,7 @@ gulp.task('watch', ['lint', 'babel'], () => {
     'app/_locales/**/*.json'
   ]).on('change', $.livereload.reload);
 
-  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel']);
+  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel', 'scripts']);
   gulp.watch('app/styles.scss/**/*.scss', ['styles']);
   gulp.watch('bower.json', ['wiredep']);
 });

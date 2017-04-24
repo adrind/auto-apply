@@ -11,7 +11,7 @@
   "background": {
     "scripts": [
       "scripts/chromereload.js",
-      "scripts/background.js"
+      "scripts/built/background.js"
     ]
   },
   "permissions": [
@@ -31,7 +31,7 @@
       ],
       "js": [
         "scripts/jquery-3.2.1.min.js",
-        "scripts/contentscript.js"
+        "scripts/built/contentscript.js"
       ],
       "css": ["styles/content.css"],
       "run_at": "document_end",
