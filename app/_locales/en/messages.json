@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "auto apply",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "Easily apple to multiple jobs around the web",
+    "description": "The description of the application"
+  }
+}
