@@ -11,6 +11,7 @@
   "background": {
     "scripts": [
       "scripts/chromereload.js",
+      "scripts/jquery-3.2.1.min.js",
       "scripts/built/background.js"
     ]
   },
@@ -20,7 +21,6 @@
     "https://*/*",
     "storage",
     "webRequest",
-    "webNavigation",
     "*://*.google.com/"
   ],
   "content_scripts": [

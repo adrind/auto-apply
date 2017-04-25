@@ -1,10 +1,18 @@
 'use strict';
 
-let data = {
-    name: 'Adrienne',
-    address: 'I live here',
-    username: 'hi',
-    password: 'test'
+let userData = {};
+
+const findValue = function (dataId) {
+    const key = $(`div[data-id="${dataId}"] option:selected`).val();
+
+    return new Promise((res, rej) => {
+
+       chrome.storage.sync.get('data', function ({data}) {
+           const value = data[key];
+
+           res(value);
+       });
+    });
 };
 
 export const insertSuggestion = function (el, id) {
@@ -15,12 +23,12 @@ export const insertSuggestionBox = function (dataId) {
     $(`<div class="suggestion" data-id=${dataId}></div>`).insertAfter(`span[data-id=${dataId}]`);
     $(`.suggestion[data-id="${dataId}"]`).load('chrome-extension://plianlcbijbdlkhojhgejpfhklhcngfc/suggestion.html', function () {
         $(`div[data-id="${dataId}"] .fill-in-btn`).click((evt) => {
-            const key = $(`div[data-id="${dataId}"] option:selected`).val(),
-                value = data[key];
+            evt.preventDefault(); //some sites reload page
 
-            $(`span[data-id="${dataId}"]`).prev().val(value);
+            findValue(dataId).then((value) => {
+                $(`span[data-id="${dataId}"]`).prev().val(value);
+            });
 
-            return false;
         });
 
         $(`div[data-id="${dataId}"] .icon-cross`).click((evt) => {

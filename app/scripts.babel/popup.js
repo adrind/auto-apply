@@ -6,4 +6,8 @@ $(document).ready(function() {
             console.log('tab id is ', tab.id);
         })
     });
+
+    $('.login').click(function () {
+        chrome.runtime.sendMessage(null, 'login')
+    })
 });
