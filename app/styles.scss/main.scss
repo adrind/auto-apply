@@ -5,6 +5,9 @@ body {
   padding: .5rem 2rem;
 }
 
+.hidden {
+  display: none;
+}
 
 /* POP UP STYLE */
 #popup {
@@ -20,4 +23,11 @@ body {
   .btn-group {
     text-align: center;
   }
+
+
+  .update-resume,
+  .logout {
+    display: none;
+  }
 }
+
