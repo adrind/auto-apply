@@ -32,4 +32,15 @@ export default class DataManager {
             return data.isLoggedIn;
         });
     }
+    logout() {
+        return new Promise((res, rej) => {
+            this.chrome.storage.sync.clear((err) => {
+                if(err) {
+                    rej();
+                } else {
+                    res();
+                }
+            })
+        });
+    }
 }

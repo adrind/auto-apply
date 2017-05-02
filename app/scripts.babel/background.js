@@ -9,9 +9,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         $.get('http://localhost:3000/login', message.data).done((response) => {
             if(response.status == 200) {
                 chrome.storage.sync.set({'data': response.data, 'isLoggedIn': true});
-                dm.getProfile('firstName').then((name) => {
-                    sendResponse({isLoggedIn: true, name: name});
-                });
+                dm.getProfile('firstName').then(name => sendResponse({isLoggedIn: true, name: name}));
             } else {
                 sendResponse({isLoggedIn: false});
             }
@@ -19,9 +17,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 
     if(message.message === 'logout') {
-        $.get('http://localhost:3000').done((userData) => {
-            chrome.storage.sync.remove('data');
-        });
+        dm.logout().then(_ => sendResponse({isLoggedIn: false}));
     }
 
     //needed to make sure extension knows that sendResponse async

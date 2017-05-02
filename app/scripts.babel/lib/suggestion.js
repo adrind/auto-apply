@@ -18,12 +18,10 @@ export const insertSuggestionBox = (dataId) => {
         $(`div[data-id="${dataId}"] .fill-in-btn`).click((evt) => {
             evt.preventDefault(); //some sites reload page
 
-            findValue(dataId).then((value) => {
-                $(`span[data-id="${dataId}"]`).prev().val(value);
-            });
+            findValue(dataId).then(value => $(`span[data-id="${dataId}"]`).prev().val(value));
         });
 
-        $(`div[data-id="${dataId}"] .icon-cross`).click((evt) => {
+        $(`div[data-id="${dataId}"] .icon-cross`).click(evt => {
             $(`.suggestion[data-id="${dataId}"]`).remove();
             $(`.edit-suggestion[data-id=${dataId}]`).show();
         })
@@ -31,7 +29,7 @@ export const insertSuggestionBox = (dataId) => {
 };
 
 export const setSuggestionListeners = () => {
-    $('.edit-suggestion').click(function (evt) {
+    $('.edit-suggestion').click((evt) => {
         const parent = $(evt.target).parent();
         parent.hide();
 

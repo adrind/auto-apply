@@ -12,9 +12,7 @@ $(document).ready(function() {
         $SPINNER = $('.spinner');
 
     $UPDATE_BTN.click(function() {
-        chrome.tabs.create({url: 'http://localhost:3000/'}, (tab) => {
-            console.log('tab id is ', tab.id);
-        })
+        chrome.tabs.create({url: 'http://localhost:3000/'}, tab => console.log('tab id is ', tab.id));
     });
 
     //Show username/password login inputs when a user clicks the button
@@ -30,7 +28,7 @@ $(document).ready(function() {
             $LOGIN_DIV.hide();
 
             //Check username and password, store resume info in local storage
-            chrome.runtime.sendMessage(null, {message: 'login', data: {username, password}}, null, function ({isLoggedIn, name}) {
+            chrome.runtime.sendMessage(null, {message: 'login', data: {username, password}}, null, ({isLoggedIn, name}) => {
                 $SPINNER.hide();
 
                 if(isLoggedIn) {
@@ -50,7 +48,7 @@ $(document).ready(function() {
 
     //TODO: Logout from the current session
     $LOGOUT.click(function () {
-        chrome.runtime.sendMessage(null, 'logout', {}, function () {
+        chrome.runtime.sendMessage(null, 'logout', {}, _ => {
             $LOGGED_OUT_BTN_GROUP.show();
             $LOGGED_IN_BTN_GROUP.hide();
         });
@@ -58,9 +56,7 @@ $(document).ready(function() {
 
     //TODO: Allow a user to update their resume information in a new tab
     chrome.storage.sync.get('isLoggedIn', ({isLoggedIn}) => {
-        console.log('HIIII', isLoggedIn)
         if(isLoggedIn) {
-            console.log('showing buttons', $LOGGED_IN_BTN_GROUP)
             $LOGGED_OUT_BTN_GROUP.hide();
             $LOGGED_IN_BTN_GROUP.show();
         } else {
