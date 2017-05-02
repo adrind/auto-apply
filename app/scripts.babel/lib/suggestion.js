@@ -23,7 +23,6 @@ export const insertSuggestionBox = (dataId) => {
             });
         });
 
-
         $(`div[data-id="${dataId}"] .icon-cross`).click((evt) => {
             $(`.suggestion[data-id="${dataId}"]`).remove();
             $(`.edit-suggestion[data-id=${dataId}]`).show();

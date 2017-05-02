@@ -2,7 +2,28 @@
 
 $(document).ready(function() {
     $('.login').click(function () {
-        chrome.runtime.sendMessage(null, 'login')
+        $('.btn-group').hide();
+        $('.login-input').show();
+
+        $('.login-submit').click(function () {
+            const username = $('.username-input').val(),
+                password = $('.password-input').val();
+
+            chrome.runtime.sendMessage(null, {message: 'login', data: {username, password}}, null, function ({isLoggedIn, name}) {
+                if(isLoggedIn) {
+
+                }
+                $('.update-resume').show().click(function() {
+                    chrome.tabs.create({url: 'http://localhost:3000/'}, (tab) => {
+                        console.log('tab id is ', tab.id);
+                    })
+                });
+
+                $('.logout').show();
+                $('.login').hide();
+            });
+        });
+
     });
 
     $('.logout').click(function () {
