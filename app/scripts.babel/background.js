@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if(message.message === 'login') {
         $.get('http://localhost:3000/login', message.data).done((response) => {
             if(response.status == 200) {
-                chrome.storage.sync.set({'data': response.data});
+                chrome.storage.sync.set({'data': response.data, 'isLoggedIn': true});
                 dm.getProfile('firstName').then((name) => {
                     sendResponse({isLoggedIn: true, name: name});
                 });

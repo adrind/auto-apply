@@ -11,6 +11,12 @@ $(document).ready(function() {
         $MESSAGE = $('.message'),
         $SPINNER = $('.spinner');
 
+    $UPDATE_BTN.click(function() {
+        chrome.tabs.create({url: 'http://localhost:3000/'}, (tab) => {
+            console.log('tab id is ', tab.id);
+        })
+    });
+
     //Show username/password login inputs when a user clicks the button
     $LOGIN.click(function () {
         $LOGGED_OUT_BTN_GROUP.hide();
@@ -33,11 +39,6 @@ $(document).ready(function() {
 
                     //TODO: i18n
                     $MESSAGE.text(`Welcome back ${name}`);
-                    $UPDATE_BTN.show().click(function() {
-                        chrome.tabs.create({url: 'http://localhost:3000/'}, (tab) => {
-                            console.log('tab id is ', tab.id);
-                        })
-                    });
                 } else {
                     //Error while logging in
                     $LOGIN_DIV.show();
@@ -56,16 +57,14 @@ $(document).ready(function() {
     });
 
     //TODO: Allow a user to update their resume information in a new tab
-    chrome.storage.sync.get('user', function (data) {
-        if(data.loggedIn) {
-            $UPDATE_BTN.show().click(function() {
-                chrome.tabs.create({url: 'http://localhost:3000/'}, (tab) => {
-                    console.log('tab id is ', tab.id);
-                })
-            });
-
-            $LOGOUT.show();
+    chrome.storage.sync.get('isLoggedIn', ({isLoggedIn}) => {
+        console.log('HIIII', isLoggedIn)
+        if(isLoggedIn) {
+            console.log('showing buttons', $LOGGED_IN_BTN_GROUP)
             $LOGGED_OUT_BTN_GROUP.hide();
+            $LOGGED_IN_BTN_GROUP.show();
+        } else {
+            $LOGGED_OUT_BTN_GROUP.show();
         }
     });
 });

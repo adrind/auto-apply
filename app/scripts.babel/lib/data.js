@@ -1,5 +1,15 @@
 'use strict';
 
+/* Data manager to manage storing/fetching data from chrome
+ * Current setup:
+ * Data (obj)
+ * * Profile (obj)
+ * * * firstName
+ * * * secondName
+ * * * address
+ * * isLoggedIn (boolean)
+ * */
+
 export default class DataManager {
     constructor(chrome) {
         this.chrome = chrome;
@@ -15,6 +25,11 @@ export default class DataManager {
     getProfile(key) {
         return this.get().then((data) => {
             return data.profile && data.profile[key];
+        });
+    }
+    isLoggedIn() {
+        return this.get().then((data) => {
+            return data.isLoggedIn;
         });
     }
 }
