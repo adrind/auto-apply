@@ -31,16 +31,18 @@ $(document).ready(function() {
                     $LOGGED_IN_BTN_GROUP.show();
                     $LOGGED_OUT_BTN_GROUP.hide();
 
-                    $MESSAGE.text(`Welcome ${name}`);
+                    //TODO: i18n
+                    $MESSAGE.text(`Welcome back ${name}`);
+                    $UPDATE_BTN.show().click(function() {
+                        chrome.tabs.create({url: 'http://localhost:3000/'}, (tab) => {
+                            console.log('tab id is ', tab.id);
+                        })
+                    });
+                } else {
+                    //Error while logging in
+                    $LOGIN_DIV.show();
+                    $MESSAGE.text('Error while logging in');
                 }
-                $UPDATE_BTN.show().click(function() {
-                    chrome.tabs.create({url: 'http://localhost:3000/'}, (tab) => {
-                        console.log('tab id is ', tab.id);
-                    })
-                });
-
-                $LOGOUT.show();
-                $LOGIN.hide();
             });
         });
     });

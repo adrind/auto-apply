@@ -42,5 +42,13 @@ body {
       width: 100%;
     }
   }
+
+  .message {
+    font-size: 1.6rem;
+    margin: 1rem 0;
+    font-weight: normal;
+    text-align: center;
+    color: $color-dark-gray;
+  }
 }
 
