@@ -1,11 +1,18 @@
 'use strict';
 
-$(document).ready(function() {
-    $('.login').click(function () {
-        $('.btn-group').hide();
-        $('.login-input').show();
+const $LOGOUT = '.logout',
+      $LOGIN = '.login',
+      $BTN_GROUP = '.btn-group',
+      $UPDATE_BTN = '.update-resume',
+      $LOGIN_DIV = '.login-input',
+      $LOGIN_SUBMIT_BTN = '.login-submit';
 
-        $('.login-submit').click(function () {
+$(document).ready(function() {
+    $($LOGIN).click(function () {
+        $($BTN_GROUP).hide();
+        $($LOGIN_DIV).show();
+
+        $($LOGIN_SUBMIT_BTN).click(function () {
             const username = $('.username-input').val(),
                 password = $('.password-input').val();
 
@@ -13,37 +20,37 @@ $(document).ready(function() {
                 if(isLoggedIn) {
 
                 }
-                $('.update-resume').show().click(function() {
+                $($UPDATE_BTN).show().click(function() {
                     chrome.tabs.create({url: 'http://localhost:3000/'}, (tab) => {
                         console.log('tab id is ', tab.id);
                     })
                 });
 
-                $('.logout').show();
-                $('.login').hide();
+                $($LOGOUT).show();
+                $($LOGIN).hide();
             });
         });
 
     });
 
-    $('.logout').click(function () {
+    $($LOGOUT).click(function () {
         chrome.runtime.sendMessage(null, 'logout', {}, function () {
-            $('.login').show();
-            $('.update-resume').hide();
-            $('.logout').hide();
+            $($LOGIN).show();
+            $($UPDATE_BTN).hide();
+            $($LOGOUT).hide();
         });
     });
 
     chrome.storage.sync.get('user', function (data) {
         if(data.loggedIn) {
-            $('.update-resume').show().click(function() {
+            $($UPDATE_BTN).show().click(function() {
                 chrome.tabs.create({url: 'http://localhost:3000/'}, (tab) => {
                     console.log('tab id is ', tab.id);
                 })
             });
 
-            $('.logout').show();
-            $('.login').hide();
+            $($LOGOUT).show();
+            $($LOGIN).hide();
         }
     });
 });
