@@ -1,12 +1,19 @@
 @import "globals";
 
-
 body {
   padding: .5rem 2rem;
 }
 
+.hidden {
+  display: none;
+}
 
-/* POP UP STYLE */
+.spinner {
+  display: none;
+  width: 100%;
+}
+
+/* popup.html styles */
 #popup {
   width: 18rem;
   height: 15rem;
@@ -20,4 +27,27 @@ body {
   .btn-group {
     text-align: center;
   }
+
+  .logged-in,
+  .login-input {
+    display: none;
+  }
+
+  .login-input {
+    input {
+      width: 189px;
+    }
+    button {
+      width: 100%;
+    }
+  }
+
+  .message {
+    font-size: 1.6rem;
+    margin: 1rem 0;
+    font-weight: normal;
+    text-align: center;
+    color: $color-dark-gray;
+  }
 }
+
