@@ -48,7 +48,8 @@ $(document).ready(function() {
 
     //TODO: Logout from the current session
     $LOGOUT.click(function () {
-        chrome.runtime.sendMessage(null, 'logout', {}, _ => {
+        chrome.runtime.sendMessage(null, {message: 'logout'}, {}, _ => {
+            $MESSAGE.text('You have been logged out');
             $LOGGED_OUT_BTN_GROUP.show();
             $LOGGED_IN_BTN_GROUP.hide();
         });
@@ -60,6 +61,7 @@ $(document).ready(function() {
             $LOGGED_OUT_BTN_GROUP.hide();
             $LOGGED_IN_BTN_GROUP.show();
         } else {
+            $LOGGED_IN_BTN_GROUP.hide();
             $LOGGED_OUT_BTN_GROUP.show();
         }
     });

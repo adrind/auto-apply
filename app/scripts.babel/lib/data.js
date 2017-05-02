@@ -17,7 +17,6 @@ export default class DataManager {
     get() {
         return new Promise((res, rej) => {
             this.chrome.storage.sync.get('data', function (data) {
-                console.log('Fetching data from DM!', data);
                 res(data.data);
             });
         });
@@ -40,7 +39,7 @@ export default class DataManager {
                 } else {
                     res();
                 }
-            })
+            });
         });
     }
 }
