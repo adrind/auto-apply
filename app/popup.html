@@ -2,43 +2,35 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <!-- build:css styles/popup-vendor.css -->
-    <!-- bower:css -->
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="//style.codeforamerica.org/2/style/css/main.css">
     <link href="styles/main.css" rel="stylesheet">
-    <!-- endbuild -->
   </head>
   <body id="popup">
     <h1>Auto Apply Wizard</h1>
 
-    <div class="btn-group">
+    <div class="btn-group logged-in">
+      <span class="message"></span>
       <button class="btn btn-1 btn-1a logout">Log out</button>
       <button class="btn btn-1 btn-1a update-resume">Update Resume</button>
+    </div>
+
+    <div class="btn-group logged-out">
       <button class="btn btn-1 btn-1a login">Log in</button>
     </div>
 
     <div class="login-input">
-      <label>
+      <label for="username">
         Username
-        <input type="text" class="username-input"/>
       </label>
-      <label>
+      <input type="text" class="username-input" id="username"/>
+      <label for="password">
         Password
-        <input type="password" class="password-input"/>
       </label>
+      <input type="password" class="password-input" id="password"/>
       <button class="btn btn-1 btn-1a login-submit">Log in</button>
     </div>
 
-    <!-- build:js scripts/popup-vendor.js -->
-    <!-- bower:js -->
-    <!-- endbower -->
-    <!-- endbuild -->
-
-    <!-- build:js scripts/popup.js -->
     <script src="scripts/jquery-3.2.1.min.js"></script>
     <script src="scripts/popup.js"></script>
-    <!-- endbuild -->
   </body>
 </html>

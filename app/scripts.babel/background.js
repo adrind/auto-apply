@@ -1,17 +1,18 @@
 'use strict';
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if(message.message === 'login') {
-        console.log('get this data', message.data);
+import DataManager from './lib/data';
+const dm = new DataManager(chrome);
 
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    //Login the user and store the resume as data
+    if(message.message === 'login') {
         $.get('http://localhost:3000/login', message.data).done((response) => {
             if(response.status == 200) {
                 chrome.storage.sync.set({'data': response.data});
-                console.log('logged in! sending response', sendResponse);
-                sendResponse({isLoggedIn: true});
-
+                dm.getProfile('firstName').then((name) => {
+                    sendResponse({isLoggedIn: true, name: name});
+                });
             } else {
-                console.log('wrong password');
                 sendResponse({isLoggedIn: false});
             }
         });
@@ -22,5 +23,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             chrome.storage.sync.remove('data');
         });
     }
+
+    //needed to make sure extension knows that sendResponse async
     return true;
 });

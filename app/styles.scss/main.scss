@@ -9,6 +9,44 @@ body {
   display: none;
 }
 
+input,
+select {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 19px;
+  margin: 0 8px 2px 0;
+  min-height: 39px;
+  padding: 0 10px;
+  vertical-align: middle;
+}
+
+label {
+  color: #6d6e71;
+  display: block;
+  font-size: 0.8em;
+  line-height: 1.25rem;
+  line-height: 20px;
+  margin-bottom: 0;
+  margin-right: 0.5em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+textarea:focus,
+input:focus {
+  border-color: #004b6a;
+  outline: 0;
+}
+
+input.invalid {
+  border: 1px solid #cf1b41;
+}
+
+input[type="text"][disabled] {
+  background: #f1f1f1;
+}
+
+
 /* POP UP STYLE */
 #popup {
   width: 18rem;
@@ -29,6 +67,15 @@ body {
   .logout,
   .login-input {
     display: none;
+  }
+
+  .login-input {
+    input {
+      width: 189px;
+    }
+    button {
+      width: 100%;
+    }
   }
 }
 
