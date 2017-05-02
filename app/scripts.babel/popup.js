@@ -1,15 +1,16 @@
 'use strict';
 
-const $LOGOUT = $('.logout'),
-      $LOGIN = $('.login'),
-      $LOGGED_IN_BTN_GROUP = $('.logged-in'),
-      $LOGGED_OUT_BTN_GROUP = $('.logged-out'),
-      $UPDATE_BTN = $('.update-resume'),
-      $LOGIN_DIV = $('.login-input'),
-      $LOGIN_SUBMIT_BTN = $('.login-submit'),
-      $MESSAGE = $('.message');
-
 $(document).ready(function() {
+    const $LOGOUT = $('.logout'),
+        $LOGIN = $('.login'),
+        $LOGGED_IN_BTN_GROUP = $('.logged-in'),
+        $LOGGED_OUT_BTN_GROUP = $('.logged-out'),
+        $UPDATE_BTN = $('.update-resume'),
+        $LOGIN_DIV = $('.login-input'),
+        $LOGIN_SUBMIT_BTN = $('.login-submit'),
+        $MESSAGE = $('.message'),
+        $SPINNER = $('.spinner');
+
     //Show username/password login inputs when a user clicks the button
     $LOGIN.click(function () {
         $LOGGED_OUT_BTN_GROUP.hide();
@@ -19,12 +20,16 @@ $(document).ready(function() {
             const username = $('.username-input').val(),
                 password = $('.password-input').val();
 
+            $SPINNER.show();
+            $LOGIN_DIV.hide();
+
             //Check username and password, store resume info in local storage
             chrome.runtime.sendMessage(null, {message: 'login', data: {username, password}}, null, function ({isLoggedIn, name}) {
+                $SPINNER.hide();
+
                 if(isLoggedIn) {
                     $LOGGED_IN_BTN_GROUP.show();
                     $LOGGED_OUT_BTN_GROUP.hide();
-                    $LOGIN_DIV.hide();
 
                     $MESSAGE.text(`Welcome ${name}`);
                 }
