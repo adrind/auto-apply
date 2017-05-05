@@ -33,6 +33,8 @@
           });
         });
       });
+    });
+    describe('#logout()', function () {
       it('should clear all the data when a user logs out', function (done) {
         const dm = new data.default(chrome);
 
@@ -49,39 +51,26 @@
           });
         });
       });
-      it('should clear all the data when a user logs out', function (done) {
+    });
+    describe('#getProfileKey()', function () {
+      it('should fetch the correct value from profile when passed a key', function (done) {
         const dm = new data.default(chrome);
 
         const importantPersonalData = {
-          socialSecurityNumber: '123456banana'
+          biggestFearInLife: 'pigeons'
         };
 
-        chrome.storage.sync.set({data: importantPersonalData}, function () {
-          dm.logout().then(_ => {
-            return dm.get();
-          }).then(data => {
-            assert.equal(data, undefined);
+        const unrelatedData = {
+          canPigsFly: false
+        };
+
+        chrome.storage.sync.set({data: {profile: importantPersonalData, other: unrelatedData}}, function () {
+          dm.getProfile('biggestFearInLife').then(biggestFearInLife => {
+            assert.equal(biggestFearInLife, 'pigeons');
             done();
           });
         });
       });
-      it('should mark the user as logged out ', function (done) {
-        const dm = new data.default(chrome);
-
-        const importantPersonalData = {
-          socialSecurityNumber: '123456banana'
-        };
-
-        chrome.storage.sync.set({data: importantPersonalData}, function () {
-          dm.logout().then(_ => {
-            return dm.get();
-          }).then(data => {
-            assert.equal(data, undefined);
-            done();
-          });
-        });
-      });
-
     });
   });
 })();
