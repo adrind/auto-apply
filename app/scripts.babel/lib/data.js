@@ -32,7 +32,7 @@ export default class DataManager {
         });
     }
     logout() {
-        return new Promise((res, rej) => {
+      return new Promise((res, rej) => {
             this.chrome.storage.sync.clear((err) => {
                 if(err) {
                     rej();
