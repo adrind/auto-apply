@@ -9,7 +9,16 @@ $(document).ready(function() {
         $LOGIN_DIV = $('.login-input'),
         $LOGIN_SUBMIT_BTN = $('.login-submit'),
         $MESSAGE = $('.message'),
-        $SPINNER = $('.spinner');
+        $SPINNER = $('.spinner'),
+        $FB_LOGIN_BTN = $('.fb-login-button');
+
+
+    $FB_LOGIN_BTN.click(function () {
+      chrome.runtime.sendMessage(null, {message: 'facebook'}, _ => {
+        //TODO: Handle UX on successful login
+        console.log('message sent');
+      });
+    });
 
     $UPDATE_BTN.click(function() {
         chrome.tabs.create({url: 'http://localhost:3000/'}, tab => console.log('tab id is ', tab.id));
@@ -65,4 +74,8 @@ $(document).ready(function() {
             $LOGGED_OUT_BTN_GROUP.show();
         }
     });
+
+  const fbAuthCallback = function (response) {
+    chrome.runtime.sendMessage(null, {message: 'facebook', data: {accessToken: response.authResponse.accessToken}})
+  };
 });
