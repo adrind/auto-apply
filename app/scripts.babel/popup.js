@@ -74,8 +74,4 @@ $(document).ready(function() {
             $LOGGED_OUT_BTN_GROUP.show();
         }
     });
-
-  const fbAuthCallback = function (response) {
-    chrome.runtime.sendMessage(null, {message: 'facebook', data: {accessToken: response.authResponse.accessToken}})
-  };
 });
