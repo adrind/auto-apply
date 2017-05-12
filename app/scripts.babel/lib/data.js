@@ -10,6 +10,15 @@
  * * isLoggedIn (boolean)
  * */
 
+const mockResume = {
+  firstName: 'Adrienne',
+  secondName: 'Dreyfus',
+  address: '3099 Washington st',
+  city: 'San Francisco',
+  state: 'CA',
+  zip: '94415'
+};
+
 export default class DataManager {
     constructor(chrome) {
         this.chrome = chrome;
@@ -20,6 +29,9 @@ export default class DataManager {
                 res(data.data);
             });
         });
+    }
+    getMock(key) {
+      return Promise.resolve(mockResume[key]);
     }
     getProfile(key) {
         return this.get().then((data) => {

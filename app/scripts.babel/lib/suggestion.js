@@ -5,7 +5,7 @@ const dm = new DataManager(chrome);
 
 const findValue = (dataId) => {
     const key = $(`div[data-id="${dataId}"] option:selected`).val();
-    return dm.getProfile(key);
+    return dm.getMock(key);
 };
 
 export const insertSuggestion = (el, id) => {
