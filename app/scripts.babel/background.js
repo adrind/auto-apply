@@ -3,7 +3,6 @@
 import DataManager from './lib/data';
 const dm = new DataManager(chrome);
 
-
 const FB_CLIENT_ID = 1523477781017871,
       FB_LOGIN_REDIRECT_URI = 'http://localhost:3000/auth';
 
