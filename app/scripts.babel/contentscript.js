@@ -41,6 +41,7 @@ $(document).ready(function() {
         const $input = $(input);
         const labelText = getLabelText($input);
 
+
         if(labelText) {
           const key = fill.findMatch(labelText);
           if(key) {
