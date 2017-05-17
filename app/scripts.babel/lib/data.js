@@ -35,6 +35,7 @@ export default class DataManager {
     }
     getProfile(key) {
         return this.get().then((data) => {
+            console.log('getting profile data', data);
             return data.profile && data.profile[key];
         });
     }

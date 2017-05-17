@@ -1,10 +1,21 @@
 'use strict';
 
 import { insertSuggestion, setSuggestionListeners } from './lib/suggestion';
+import Fill from './lib/fill';
+import DataManager from './lib/data';
 
-const whitelistUrls = ['https://hiringcenter.walmartstores.com', 'https://www.facebook.com'];
+const fill = new Fill();
+const dm = new DataManager(chrome);
+
+
+const whitelistUrls = ['https://hiringcenter.walmartstores.com', 'https://www.gci.com', 'https://secure.beaconinsight.com'];
 const domainRegex = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im;
 
+const getTextNodeText = function ($node) {
+  return $node.contents().filter(function() {
+    return this.nodeType == Node.TEXT_NODE;
+  }).text();
+};
 
 const isSupportedWebsite = function(website) {
     const matches = website.match(domainRegex);
@@ -14,50 +25,32 @@ const isSupportedWebsite = function(website) {
     }, false);
 };
 
-const isLoginScreen = function () {
-  const passwordFields = $('input[type="password"]');
-  return passwordFields.length === 1;
+const getLabelText = function ($input) {
+  if($input.attr('id')) {
+    const $label = $(`label[for="${$input.attr('id')}"]`);
+    return getTextNodeText($input);
+  } else if ($input.parent().prev().is('td')) {
+    return getTextNodeText($($input.parent().prev()))
+  }
 };
-
-const isSignupScreen = function () {
-  const passwordFields = $('input[type="password"]');
-  return passwordFields.length === 2;
-};
-
-const hasFormFields = function () {
-  const inputFields = $('form input[type="text"]'),
-        textAreas = $('form textarea');
-  return inputFields.length || textAreas.length;
-};
-
 
 $(document).ready(function() {
     const url = window.location.href;
     if(isSupportedWebsite(url)) {
-        if(isSignupScreen()) {
-            //Special logic to save username and pass
-            $('form button').click(function() {
-                const passwords = $('input[type="password"]'),
-                    pass1 = passwords[0].value,
-                    pass2 = passwords[1].value,
-                    username = $('form input[type="text"]').val();
+      $('input').map((i, input) => {
+        const $input = $(input);
+        const labelText = getLabelText($input);
 
-
-                if(pass1 === pass2) {
-                    console.log('username is ', username);
-                    console.log('password is ', pass1);
-                }
+        if(labelText) {
+          const key = fill.findMatch(labelText);
+          if(key) {
+            dm.getProfile(key).then(value => {
+              console.log('setting value', value);
+              $input.value(value);
             });
-        } else if (isLoginScreen()) {
-            insertSuggestion('form input[type="text"]', 'username');
-            insertSuggestion('form input[type="password"]', 'password');
-            setSuggestionListeners();
-        } else if (hasFormFields()) {
-            $('form input[type="text"]').map((i, el) => {
-               insertSuggestion($(el), el.name);
-            });
-            setSuggestionListeners();
+          }
         }
+      })
     }
 });
 

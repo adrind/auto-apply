@@ -51,5 +51,8 @@
         "single"
       ]
     }
+  },
+  "dependencies": {
+    "string-similarity": "^1.1.0"
   }
 }
