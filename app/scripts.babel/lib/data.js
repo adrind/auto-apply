@@ -34,7 +34,7 @@ export default class DataManager {
       return Promise.resolve(mockResume[key]);
     }
     getProfile(key) {
-        return this.get().then((data) => {
+        return this.get().then(({data}) => {
             console.log('getting profile data', data);
             return data.profile && data.profile[key];
         });
@@ -43,6 +43,15 @@ export default class DataManager {
         return this.get().then((data) => {
             return data.isLoggedIn;
         });
+    }
+    set(data) {
+      console.log('setting data', data);
+
+      return new Promise((res, rej) => {
+        this.chrome.storage.sync.set({'data': data}, function () {
+          res();
+        });
+      });
     }
     logout() {
       return new Promise((res, rej) => {

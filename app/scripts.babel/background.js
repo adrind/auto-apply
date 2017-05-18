@@ -3,8 +3,9 @@
 import DataManager from './lib/data';
 const dm = new DataManager(chrome);
 
+
 const FB_CLIENT_ID = 1523477781017871,
-      FB_LOGIN_REDIRECT_URI = 'http://localhost:3000/auth';
+      FB_LOGIN_REDIRECT_URI = 'http://rezoome-manager.herokuapp.com/auth/facebook/callback';
 
 chrome.runtime.onMessage.addListener(({message, data}, sender, sendResponse) => {
     if(message === 'logout') {
@@ -13,9 +14,9 @@ chrome.runtime.onMessage.addListener(({message, data}, sender, sendResponse) => 
 
     if(message === 'facebook') {
       window.open(`https://www.facebook.com/v2.9/dialog/oauth?client_id=${FB_CLIENT_ID}&redirect_uri=${FB_LOGIN_REDIRECT_URI}&scope=public_profile,user_education_history`);
-      $.get('http://localhost:3000/user/120059358567852').done(response => {
+      /*$.get('http://localhost:3000/user/120059358567852').done(response => {
         dm.set(response);
-      });
+      });*/
     }
     //needed to make sure extension knows that sendResponse async
     return true;

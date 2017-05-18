@@ -8,7 +8,7 @@ const fill = new Fill();
 const dm = new DataManager(chrome);
 
 
-const whitelistUrls = ['https://hiringcenter.walmartstores.com', 'https://www.gci.com', 'https://secure.beaconinsight.com'];
+const whitelistUrls = ['https://hiringcenter.walmartstores.com', 'https://www.gci.com', 'https://secure.beaconinsight.com', 'https://providence.taleo.net'];
 const domainRegex = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im;
 
 const getTextNodeText = function ($node) {
@@ -28,7 +28,7 @@ const isSupportedWebsite = function(website) {
 const getLabelText = function ($input) {
   if($input.attr('id')) {
     const $label = $(`label[for="${$input.attr('id')}"]`);
-    return getTextNodeText($input);
+    return getTextNodeText($label);
   } else if ($input.parent().prev().is('td')) {
     return getTextNodeText($($input.parent().prev()))
   }
@@ -41,13 +41,12 @@ $(document).ready(function() {
         const $input = $(input);
         const labelText = getLabelText($input);
 
-
         if(labelText) {
           const key = fill.findMatch(labelText);
           if(key) {
             dm.getProfile(key).then(value => {
               console.log('setting value', value);
-              $input.value(value);
+              $input.val(value);
             });
           }
         }
