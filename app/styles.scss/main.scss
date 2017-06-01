@@ -46,5 +46,62 @@
     text-align: center;
     color: $color-dark-gray;
   }
+
+  //Button reset
+  .btn {
+    border: none;
+    font-family: inherit;
+    font-size: 1.4rem;
+    color: inherit;
+    background: none;
+    cursor: pointer;
+    padding: 1.5rem 4.0rem;
+    width: 15rem;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    outline: none;
+    position: relative;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+
+  .btn:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+
+  .btn-1 {
+    border: 3px solid #fff;
+    color: $color-light-gray;
+    background: $color-blue;
+  }
+
+  /* Button 1a */
+  .btn-1a:hover,
+  .btn-1a:active {
+    color: $color-blue;
+    background: $color-light-gray;
+  }
+
+  .btn-2 {
+    border: 3px solid #fff;
+    color: $color-light-gray;
+    background: $color-medium-red;
+  }
+
+  /* Button 1a */
+  .btn-2:hover,
+  .btn-2:active {
+    color: $color-medium-red;
+    background: $color-light-gray;
+  }
+
 }
 

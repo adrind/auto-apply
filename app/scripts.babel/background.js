@@ -3,21 +3,52 @@
 import DataManager from './lib/data';
 const dm = new DataManager(chrome);
 
-
-const FB_CLIENT_ID = 1523477781017871,
-      FB_LOGIN_REDIRECT_URI = 'http://rezoome-manager.herokuapp.com/auth/facebook/callback';
-
 chrome.runtime.onMessage.addListener(({message, data}, sender, sendResponse) => {
     if(message === 'logout') {
-        dm.logout().then(_ => sendResponse({isLoggedIn: false})).catch(_ => sendResponse({isLoggedIn: true}));
+        $.get('http://rezoome-manager.herokuapp.com/signout').done(function (response) {
+          //TODO: error handling
+          dm.logout().then(_ => sendResponse({isLoggedIn: false})).catch(_ => sendResponse({isLoggedIn: true}));
+        });
     }
 
     if(message === 'facebook') {
-      window.open(`https://www.facebook.com/v2.9/dialog/oauth?client_id=${FB_CLIENT_ID}&redirect_uri=${FB_LOGIN_REDIRECT_URI}&scope=public_profile,user_education_history`);
-      /*$.get('http://localhost:3000/user/120059358567852').done(response => {
-        dm.set(response);
-      });*/
+      chrome.tabs.create({url: 'http://rezoome-manager.herokuapp.com/signin'}, function (tab) {
+        setTimeout(function () {
+            chrome.tabs.get(tab.id, function (newTab) {
+              let userId = newTab.url.split('users/')[1].split('#')[0];
+
+              dm.set({userId});
+
+              $.get(`http://rezoome-manager.herokuapp.com/user-json/${userId}`).done(function (response) {
+                let name = response.name.split(' ');
+                response.firstName = name[0];
+                response.secondName = name[1];
+
+                dm.set(response);
+
+                sendResponse({status: 'success'});
+              });
+
+            });
+          }, 3000);
+        });
     }
+
+    if(message === 'refresh') {
+      dm.get('userId').then(userId => {
+        $.get(`http://rezoome-manager.herokuapp.com/user-json/${userId}`).done(function (response) {
+          let name = response.name.split(' ');
+          response.firstName = name[0];
+          response.secondName = name[1];
+
+          dm.set(response);
+
+          sendResponse({status: 'success'});
+        });
+      });
+    }
+
+
     //needed to make sure extension knows that sendResponse async
     return true;
 });

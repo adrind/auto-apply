@@ -8,3 +8,13 @@ test/bower_components
 package
 app/scripts
 app/styles
+
+.DS_Store
+.editorconfig
+.gitattributes
+.idea/
+.yo-rc.json
+dist.crx
+dist.pem
+example.zip
+test/.idea/

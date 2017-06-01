@@ -116,6 +116,8 @@ gulp.task('scripts', function() {
         debug : !gulp.env.production
       }))
       .pipe(gulp.dest('app/scripts/built'))
+
+  //update gulp  build plz
 });
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));

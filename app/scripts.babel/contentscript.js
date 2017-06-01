@@ -8,7 +8,7 @@ const fill = new Fill();
 const dm = new DataManager(chrome);
 
 
-const whitelistUrls = ['https://hiringcenter.walmartstores.com', 'https://www.gci.com', 'https://secure.beaconinsight.com', 'https://providence.taleo.net'];
+//const whitelistUrls = ['https://hiringcenter.walmartstores.com', 'https://www.gci.com', 'https://secure.beaconinsight.com', 'https://providence.taleo.net', 'https://rn22.ultipro.com', 'https://rac.taleo.net'];
 const domainRegex = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im;
 
 const getTextNodeText = function ($node) {
@@ -26,17 +26,20 @@ const isSupportedWebsite = function(website) {
 };
 
 const getLabelText = function ($input) {
-  if($input.attr('id')) {
-    const $label = $(`label[for="${$input.attr('id')}"]`);
+  const $label = $('label[for="' + $input.attr('id') + '"]');
+  if($input.attr('id') && $label.length) {
     return getTextNodeText($label);
   } else if ($input.parent().prev().is('td')) {
-    return getTextNodeText($($input.parent().prev()))
+    const text = getTextNodeText($($input.parent().prev()));
+    return text || $input.parent().prev().text();
+  } else if ($input.prev().length && $input.prev().prop('tagName').toLowerCase() === 'label') {
+    return getTextNodeText($input.prev())
   }
 };
 
 $(document).ready(function() {
-    const url = window.location.href;
-    if(isSupportedWebsite(url)) {
+  dm.isApplying().then(isApplying => {
+    if(isApplying) {
       $('input').map((i, input) => {
         const $input = $(input);
         const labelText = getLabelText($input);
@@ -45,12 +48,12 @@ $(document).ready(function() {
           const key = fill.findMatch(labelText);
           if(key) {
             dm.getProfile(key).then(value => {
-              console.log('setting value', value);
               $input.val(value);
             });
           }
         }
-      })
+      });
     }
+  });
 });
 
