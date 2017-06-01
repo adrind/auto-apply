@@ -1,5 +1,18 @@
 @import "globals";
 
+.auto-apply {
+  width: 60% !important;
+}
+
+#auto-apply {
+  border: 1px solid $color-dark-gray;
+  position: absolute;
+  width: 30%;
+  top: 0;
+  right: 0;
+  padding: 15px;
+}
+
 .suggestion {
   display: inline-block;
   padding: .5rem 1.5rem;

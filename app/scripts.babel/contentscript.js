@@ -39,7 +39,33 @@ const getLabelText = function ($input) {
 
 $(document).ready(function() {
   dm.isApplying().then(isApplying => {
+    const $body = $('body');
+    let $currentInput;
+
     if(isApplying) {
+      $body.addClass('auto-apply');
+      $body.append('<div id="auto-apply"></div>');
+
+      $('body #auto-apply').load('chrome-extension://plianlcbijbdlkhojhgejpfhklhcngfc/wizard.html', function () {
+        dm.get().then(data => {
+          const $buttonDiv = $('.wizard-button-group');
+
+          for (let key in data) {
+            if(data[key]) {
+              $buttonDiv.append(`<button name="${key}">${data[key]}</button>`);
+            }
+          }
+          
+          $('.wizard-button-group button').click(function (evt) {
+            $currentInput.val($(evt.target).text());
+          });
+        });
+      });
+
+      $('input').click(function (evt) {
+        $currentInput = $(evt.target);
+      });
+
       $('input').map((i, input) => {
         const $input = $(input);
         const labelText = getLabelText($input);
