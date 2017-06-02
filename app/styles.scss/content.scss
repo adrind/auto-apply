@@ -98,3 +98,54 @@
     background: #f1f1f1;
   }
 }
+#auto-apply {
+  .wizard-group {
+    border-bottom: 1px solid $color-medium-blue;
+    padding: 10px;
+
+    .pure-button {
+      font-family: inherit;
+    }
+
+    .pure-button {
+      font-family: inherit;
+      font-size: 100%;
+      padding: .5em 1em;
+      color: #444;
+      color: rgba(0,0,0,.8);
+      border: 1px solid #999;
+      border: transparent;
+      background-color: #E6E6E6;
+      text-decoration: none;
+      border-radius: 2px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      font-weight: bold;
+      max-width: 450px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 14px;
+    }
+
+    .pure-button {
+      display: inline-block;
+      zoom: 1;
+      white-space: nowrap;
+      vertical-align: middle;
+      text-align: center;
+      cursor: pointer;
+      -webkit-user-drag: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    .pure-button, .pure-form input:not([type]), .pure-menu {
+      box-sizing: border-box;
+    }
+    .pure-button, input {
+      line-height: normal;
+    }
+  }
+}
+

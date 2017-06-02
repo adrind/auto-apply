@@ -11,6 +11,7 @@ chrome.runtime.onMessage.addListener(({message, data}, sender, sendResponse) => 
         });
     }
 
+    //User is logging in via Facebook OAuth
     if(message === 'facebook') {
       chrome.tabs.create({url: 'http://rezoome-manager.herokuapp.com/signin'}, function (tab) {
         setTimeout(function () {
@@ -21,7 +22,6 @@ chrome.runtime.onMessage.addListener(({message, data}, sender, sendResponse) => 
                 let name = response.name.split(' ');
                 response.firstName = name[0];
                 response.secondName = name[1];
-
                 dm.set(response);
 
                 sendResponse({status: 'success'});
