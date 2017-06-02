@@ -1,6 +1,5 @@
 'use strict';
 
-import { insertSuggestion, setSuggestionListeners } from './lib/suggestion';
 import Fill from './lib/fill';
 import DataManager from './lib/data';
 
@@ -8,22 +7,12 @@ const fill = new Fill();
 const dm = new DataManager(chrome);
 
 
-//const whitelistUrls = ['https://hiringcenter.walmartstores.com', 'https://www.gci.com', 'https://secure.beaconinsight.com', 'https://providence.taleo.net', 'https://rn22.ultipro.com', 'https://rac.taleo.net'];
-const domainRegex = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im;
-
 const getTextNodeText = function ($node) {
   return $node.contents().filter(function() {
     return this.nodeType == Node.TEXT_NODE;
   }).text();
 };
 
-const isSupportedWebsite = function(website) {
-    const matches = website.match(domainRegex);
-
-    return whitelistUrls.reduce((acc, current) => {
-        return matches.includes(current) ? true : acc;
-    }, false);
-};
 
 const getLabelText = function ($input) {
   const $label = $('label[for="' + $input.attr('id') + '"]');
@@ -37,11 +26,16 @@ const getLabelText = function ($input) {
   }
 };
 
+//TODO: Change API to filter this
+const isValidKey = function (key) {
+  return !['created_at', 'id', 'updated_at', 'user_id', 'name', 'uid'].includes(key)
+};
+
 $(document).ready(function() {
   dm.isApplying().then(isApplying => {
     const $body = $('body');
     let $currentInput;
-
+    
     if(isApplying) {
       $body.addClass('auto-apply');
       $body.append('<div id="auto-apply"></div>');
@@ -51,8 +45,19 @@ $(document).ready(function() {
           const $buttonDiv = $('.wizard-button-group');
 
           for (let key in data) {
-            if(data[key]) {
-              $buttonDiv.append(`<button name="${key}">${data[key]}</button>`);
+            const val = data[key];
+
+            if(val && typeof val === 'object' && isValidKey(key)) {
+              $buttonDiv.append(`<div class="wizard-group ${key}-jobs"></div>`);
+              val.forEach(datum => {
+                for (let newKey in datum) {
+                  if(isValidKey(newKey) && datum[newKey]) {
+                    $(`.${key}-jobs`).append(`<button name="${datum.id}-${newKey}">${datum[newKey]}</button>`)
+                  }
+                }
+              });
+            } else if(val && isValidKey(key)) {
+              $buttonDiv.append(`<button name="${key}">${val}</button>`);
             }
           }
           

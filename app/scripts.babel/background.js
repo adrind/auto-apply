@@ -17,8 +17,6 @@ chrome.runtime.onMessage.addListener(({message, data}, sender, sendResponse) => 
             chrome.tabs.get(tab.id, function (newTab) {
               let userId = newTab.url.split('users/')[1].split('#')[0];
 
-              dm.set({userId});
-
               $.get(`http://rezoome-manager.herokuapp.com/user-json/${userId}`).done(function (response) {
                 let name = response.name.split(' ');
                 response.firstName = name[0];
@@ -35,8 +33,8 @@ chrome.runtime.onMessage.addListener(({message, data}, sender, sendResponse) => 
     }
 
     if(message === 'refresh') {
-      dm.get('userId').then(userId => {
-        $.get(`http://rezoome-manager.herokuapp.com/user-json/${userId}`).done(function (response) {
+      dm.get().then(data => {
+        $.get(`http://rezoome-manager.herokuapp.com/user-json/${data.id}`).done(function (response) {
           let name = response.name.split(' ');
           response.firstName = name[0];
           response.secondName = name[1];
